@@ -8,6 +8,10 @@ define [
     el: "#contactsRegion"
     model: contacts
     template: contactsListViewTemplate
+    
+    constructor: ->
+      @model.fetch()
+      
     render: ->
        $el = $(@el)
        $el.html(@template)
