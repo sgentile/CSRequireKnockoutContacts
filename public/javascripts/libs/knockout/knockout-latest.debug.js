@@ -3331,5 +3331,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);(function() {
         ko.setTemplateEngine(jqueryTmplTemplateEngineInstance);
     
     ko.exportSymbol('jqueryTmplTemplateEngine', ko.jqueryTmplTemplateEngine);
+    
 })();});
 })(window,document,navigator);                  

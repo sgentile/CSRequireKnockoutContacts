@@ -3,12 +3,12 @@ define [
   'ko'
 ], ($, ko) ->
   class Contact
-    id : ko.observable(null)
-    firstname : ko.observable('')
-    lastname : ko.observable('')
-    
+      
+      
     constructor: ->
-      @id(null)
-      @firstname("")
-      @lastname("")
+      @id = new ko.observable(null)
+      @firstname = new ko.observable('')
+      @lastname = new ko.observable('')
+      @fullname = ko.computed =>
+        @firstname() + " " + @lastname()
     

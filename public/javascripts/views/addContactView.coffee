@@ -13,7 +13,8 @@ define [
     render: ->
       $el = $(@el)
       $el.html(@template)
-      ko.applyBindings(@model, $el[0]) #$(@el)[0]
+      ko.applyBindings(@model, $el[0])
+      @
       
 
   new AddContactView()

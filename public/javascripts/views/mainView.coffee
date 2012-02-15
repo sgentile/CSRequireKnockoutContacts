@@ -4,8 +4,9 @@ define [
 ], ($, mainViewTemplate) ->
   class MainView
     el: "#mainRegion"
+    template: mainViewTemplate
     render: ->
-      $(@el).html(mainViewTemplate)
+      $(@el).html(@template)
       @
   
   new MainView()
