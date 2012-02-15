@@ -6,9 +6,9 @@ define [ "jquery", "underscore", "ko", 'cs!models/contact'],
     create: (newContact) ->
       self = @
       $.post('Contact', newContact, (data) ->
-        contact = new Contact()
-        contact.firstname(data.firstname)
-        contact.lastname(data.lastname)
+        # contact = new Contact()
+        # contact.firstname(data.firstname)
+        # contact.lastname(data.lastname)
         self.contacts.push(data) 
       )
       
@@ -19,10 +19,10 @@ define [ "jquery", "underscore", "ko", 'cs!models/contact'],
         _.each(data, (contact) ->
           #unmapped = ko.mapping.toJS(contact)
           #mapped = ko.mapping.fromJS(unmapped)
-          mappedContact = new Contact()
-          mappedContact.firstname(contact.firstname)
-          mappedContact.lastname(contact.lastname)
-          self.contacts.push(mappedContact)
+          # mappedContact = new Contact()
+          # mappedContact.firstname(contact.firstname)
+          # mappedContact.lastname(contact.lastname)
+          self.contacts.push(contact)
         )  
       )
 
