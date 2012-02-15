@@ -8,9 +8,10 @@ define [
   class NewContactViewModel
     contact: new Contact()
     addContact: ->
-       contacts.create(@contact)
-       @contact = new Contact()     
-       $("#addContactAlert").fadeIn('slow', -> $("#addContactAlert").fadeOut(800))
+       contacts.create(@contact, ->(
+        @contact = new Contact()
+        $("#addContactAlert").fadeIn('slow', -> $("#addContactAlert").fadeOut(2500))
+       ))
        @
        
   new NewContactViewModel()
