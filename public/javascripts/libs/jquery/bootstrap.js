@@ -1,3 +1,6 @@
+//Wrapped in an outer function to preserve global this
+(function (root) { define(['jquery'], function () { (function () {
+
 /* ===================================================
  * bootstrap-transition.js v2.0.0
  * http://twitter.github.com/bootstrap/javascript.html#transitions
@@ -1720,3 +1723,9 @@
   })
 
 }( window.jQuery )
+
+
+}.call(root));
+
+
+}); }(this));

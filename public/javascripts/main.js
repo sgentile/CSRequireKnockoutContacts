@@ -2,6 +2,7 @@ require({
   paths: {
   	jquery: 'libs/jquery/jquery-min',
   	jqueryvalidate: 'libs/jquery/jquery.validate',
+  	bootstrap: 'libs/jquery/bootstrap',
   	ko: 'libs/knockout/knockout-latest.debug',
   	underscore: 'libs/underscore/underscore-min',
   	backbone: 'libs/backbone/backbone-min',
