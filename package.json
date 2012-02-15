@@ -1,0 +1,12 @@
+{
+    "name": "CSRequireKnockoutContacts"
+  , "description": "Sample app using Knockout, RequireJS, NodeJs"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.7"
+    , "jade": ">= 0.0.1"
+    , "node-uuid": "1.3.3"
+    , "underscore": "1.3.1"
+  }
+}

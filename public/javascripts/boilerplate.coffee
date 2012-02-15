@@ -1,0 +1,4 @@
+define [
+  'jquery', 
+  'ko'
+], ($, ko) ->
