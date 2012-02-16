@@ -3,7 +3,8 @@ define [
   'ko',
   'cs!models/contact',
   'cs!collections/contacts',
-  'bootstrap'
+  'bootstrap',
+  'jqueryvalidate'
 ], ($, ko, Contact, contacts) ->
   class NewContactViewModel
     contact: new Contact()

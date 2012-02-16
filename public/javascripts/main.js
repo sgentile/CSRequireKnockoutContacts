@@ -4,6 +4,7 @@ require({
   	jqueryvalidate: 'libs/jquery/jquery.validate',
   	bootstrap: 'libs/jquery/bootstrap',
   	ko: 'libs/knockout/knockout-latest.debug',
+  	//komapping: 'libs/knockout/knockout.mapping-latest.debug',
   	underscore: 'libs/underscore/underscore-min',
   	backbone: 'libs/backbone/backbone-min',
   	text: 'libs/require/text',

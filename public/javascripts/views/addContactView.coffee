@@ -3,7 +3,6 @@ define [
   'ko',
   'cs!models/newContactViewModel',
   'text!templates/addContactView.html',
-  'jqueryvalidate',
   'bootstrap'
 ], ($, ko, newContactViewModel, addContactViewTemplate) ->
   class AddContactView
@@ -16,7 +15,6 @@ define [
       $el.html(@template)
       ko.applyBindings(@model, $el[0])
       $("#addContactAlert").hide()
-#      $("#addContactAlert").data('dismiss', 'alert')
       @
       
   new AddContactView()

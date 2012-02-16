@@ -4,7 +4,7 @@ define [ "jquery", "underscore", "ko", 'cs!models/contact'],
     contacts: new ko.observableArray([])
     
     create: (newContact, callback) ->
-      self = @
+      self = @      
       $.post('Contact', newContact, (data) ->
         self.contacts.push(data) 
         callback()
