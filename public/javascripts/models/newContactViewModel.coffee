@@ -8,11 +8,12 @@ define [
 ], ($, ko, Contact, contacts) ->
   class NewContactViewModel
     contact: new Contact()
-    addContact: ->
+    
+    addContact: (form)->
        contacts.create(@contact, ->(
         @contact = new Contact()
-        $("#addContactAlert").fadeIn('slow', -> $("#addContactAlert").fadeOut(2500))
-       ))
-       @
+        $("#addContactAlert").fadeIn('fast', -> $("#addContactAlert").fadeOut(5000))        
+       )) if $(form).valid()
+    
        
   new NewContactViewModel()

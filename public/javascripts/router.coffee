@@ -1,18 +1,18 @@
 define [
   'underscore', 
   'backbone', 
-  'cs!views/mainView',
-  'cs!views/addContactView'
-  'cs!views/contactsListView'
-], (_, Backbone, mainView, addContactView, contactsListView) ->
+  'cs!presenters/mainPresenter',
+  'cs!presenters/addContactPresenter'
+  'cs!presenters/contactsListPresenter'
+], (_, Backbone, mainPresenter, addContactPresenter, contactsListPresenter) ->
   class AppRouter extends Backbone.Router
     routes:
       "" : "home"     
            
     home: ->      
-      mainView.render()
-      addContactView.render()
-      contactsListView.render()
+      mainPresenter.render()
+      addContactPresenter.render()
+      contactsListPresenter.render()
       
     @initialize: (options)->
       app_router = new AppRouter()

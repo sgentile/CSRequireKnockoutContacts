@@ -78,23 +78,23 @@ $.extend($.validator.prototype, {
 });
 
 //example:
-// $('form.validate').validate({
-    // errorClass: 'error',
-    // validClass: 'success',
-    // errorElement: 'span',
-    // highlight: function(element, errorClass, validClass) {
-      // if (element.type === 'radio') {
-        // this.findByName(element.name).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
-      // } else {
-        // $(element).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
-      // }
-    // },
-    // unhighlight: function(element, errorClass, validClass) {
-      // if (element.type === 'radio') {
-        // this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
-      // } else {
-        // $(element).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
-      // }
-    // }
-  // });
+$('form.validate').validate({
+    errorClass: 'error',
+    validClass: 'success',
+    errorElement: 'span',
+    highlight: function(element, errorClass, validClass) {
+      if (element.type === 'radio') {
+        this.findByName(element.name).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+      } else {
+        $(element).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+      }
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      if (element.type === 'radio') {
+        this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+      } else {
+        $(element).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+      }
+    }
+  });
 });

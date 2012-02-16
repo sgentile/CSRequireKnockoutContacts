@@ -13,4 +13,6 @@ define [
       @lastname('')
       @fullname = ko.computed =>
         @firstname() + " " + @lastname()
+        
+    
     

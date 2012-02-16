@@ -3,9 +3,10 @@ define [
   'knockout',
   'cs!models/newContactViewModel',
   'text!templates/addContactView.html',
-  'bootstrap'
+  'bootstrap',
+  'jqueryvalidate'
 ], ($, ko, newContactViewModel, addContactViewTemplate) ->
-  class AddContactView
+  class AddContactPresenter
     el: "#addContactRegion"
     model: newContactViewModel
     template: addContactViewTemplate
@@ -17,5 +18,5 @@ define [
       $("#addContactAlert").hide()
       @
       
-  new AddContactView()
+  new AddContactPresenter()
       

@@ -2,11 +2,11 @@ define [
   'jquery', 
   'text!templates/mainView.html'
 ], ($, mainViewTemplate) ->
-  class MainView
+  class MainPresenter
     el: "#mainRegion"
     template: mainViewTemplate
     render: ->
       $(@el).html(@template)
       @
   
-  new MainView()
+  new MainPresenter()

@@ -4,7 +4,7 @@ define [
   'cs!collections/contacts',
   'text!templates/contactsListView.html'
 ], ($, ko, contacts, contactsListViewTemplate) ->
-  class ContactsListView
+  class ContactsListPresenter
     el: "#contactsRegion"
     model: contacts
     template: contactsListViewTemplate
@@ -18,4 +18,4 @@ define [
        ko.applyBindings(@model, $el[0])
        @
   
-  new ContactsListView()
+  new ContactsListPresenter()
