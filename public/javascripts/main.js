@@ -76,25 +76,45 @@ $.extend($.validator.prototype, {
     this.toShow = this.toShow.add(label);
   }
 });
-
-//example:
 $('form.validate').validate({
     errorClass: 'error',
-    validClass: 'success',
+    //validClass: 'success',
     errorElement: 'span',
     highlight: function(element, errorClass, validClass) {
       if (element.type === 'radio') {
-        this.findByName(element.name).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+        this.findByName(element.name).parent('div').parent('div').addClass(errorClass);
       } else {
-        $(element).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+        $(element).parent('div').parent('div').addClass(errorClass);
       }
     },
     unhighlight: function(element, errorClass, validClass) {
       if (element.type === 'radio') {
-        this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+        this.findByName(element.name).parent('div').parent('div').removeClass(errorClass);
       } else {
-        $(element).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+        $(element).parent('div').parent('div').removeClass(errorClass);
       }
     }
   });
 });
+
+//example:
+// $('form.validate').validate({
+    // errorClass: 'error',
+    // validClass: 'success',
+    // errorElement: 'span',
+    // highlight: function(element, errorClass, validClass) {
+      // if (element.type === 'radio') {
+        // this.findByName(element.name).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+      // } else {
+        // $(element).parent('div').parent('div').removeClass(validClass).addClass(errorClass);
+      // }
+    // },
+    // unhighlight: function(element, errorClass, validClass) {
+      // if (element.type === 'radio') {
+        // this.findByName(element.name).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+      // } else {
+        // $(element).parent('div').parent('div').removeClass(errorClass).addClass(validClass);
+      // }
+    // }
+  // });
+// });
