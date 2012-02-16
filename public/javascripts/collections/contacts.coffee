@@ -1,12 +1,14 @@
-define [ "jquery", "underscore", "ko", 'cs!models/contact'], 
-($, _, ko, Contact) ->
+define [ "jquery", "underscore", "knockout", 'cs!models/contact', 'komapping'], 
+($, _, ko, Contact, komapping) ->
   class ContactsCollection
     contacts: new ko.observableArray([])
     
     create: (newContact, callback) ->
       self = @      
-      $.post('Contact', newContact, (data) ->
-        self.contacts.push(data) 
+      $.post('Contact', newContact, (contactFromServer) ->
+        contact = new Contact()
+        contact = komapping.fromJS(contactFromServer);
+        self.contacts.push(contact) 
         callback()
       )
       
@@ -14,7 +16,9 @@ define [ "jquery", "underscore", "ko", 'cs!models/contact'],
       self = @
       self.contacts.removeAll()
       $.get('Contact', (data) ->
-        _.each(data, (contact) ->
+        _.each(data, (contactFromServer) ->
+          contact = new Contact()
+          contact = komapping.fromJS(contactFromServer);
           self.contacts.push(contact)
         )  
       )

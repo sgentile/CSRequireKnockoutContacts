@@ -1,6 +1,6 @@
 define [
   'jquery', 
-  'ko',
+  'knockout',
   'cs!models/newContactViewModel',
   'text!templates/addContactView.html',
   'bootstrap'

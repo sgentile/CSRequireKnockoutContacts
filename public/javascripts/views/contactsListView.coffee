@@ -1,6 +1,6 @@
 define [
   'jquery', 
-  'ko',
+  'knockout',
   'cs!collections/contacts',
   'text!templates/contactsListView.html'
 ], ($, ko, contacts, contactsListViewTemplate) ->

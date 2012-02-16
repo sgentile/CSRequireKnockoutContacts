@@ -1,25 +1,17 @@
-//Wrapped in an outer function to preserve global this
-(function (root) { define(['ko'], function (ko) { (function () {
+(function (factory) {
+	// Module systems magic dance.
 
-// Knockout Mapping plugin v2.0.4
-// (c) 2011 Steven Sanderson, Roy Jacobs - http://knockoutjs.com/
-// License: MIT (http://www.opensource.org/licenses/mit-license.php)
-
-// Google Closure Compiler helpers (used only to make the minified file smaller
-ko.exportSymbol = function (publicPath, object) {
-	var tokens = publicPath.split(".");
-	var target = window;
-	for (var i = 0; i < tokens.length - 1; i++)
-	target = target[tokens[i]];
-	target[tokens[tokens.length - 1]] = object;
-};
-ko.exportProperty = function (owner, publicName, object) {
-	owner[publicName] = object;
-};
-
-(function () {
-	ko.mapping = {};
-
+	if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
+		// CommonJS or Node: hard-coded dependency on "knockout"
+		factory(require("knockout"), exports);
+	} else if (typeof define === "function" && define["amd"]) {
+		// AMD anonymous module with hard-coded dependency on "knockout"
+		define(["knockout", "exports"], factory);
+	} else {
+		// <script> tag: use the global `ko` object, attaching a `mapping` property
+		factory(ko, ko.mapping = {});
+	}
+}(function (ko, exports) {
 	var mappingProperty = "__ko_mapping__";
 	var realKoDependentObservable = ko.dependentObservable;
 	var mappingNesting = 0;
@@ -53,12 +45,12 @@ ko.exportProperty = function (owner, publicName, object) {
 		return merged;
 	}
 
-	ko.mapping.isMapped = function (viewModel) {
+	exports.isMapped = function (viewModel) {
 		var unwrapped = ko.utils.unwrapObservable(viewModel);
 		return unwrapped && unwrapped[mappingProperty];
 	}
 
-	ko.mapping.fromJS = function (jsObject /*, inputOptions, target*/ ) {
+	exports.fromJS = function (jsObject /*, inputOptions, target*/ ) {
 		if (arguments.length == 0) throw new Error("When calling ko.fromJS, pass the object you want to convert.");
 
 		// When mapping is completed, even with an exception, reset the nesting level
@@ -113,22 +105,22 @@ ko.exportProperty = function (owner, publicName, object) {
 		return result;
 	};
 
-	ko.mapping.fromJSON = function (jsonString /*, options, target*/ ) {
+	exports.fromJSON = function (jsonString /*, options, target*/ ) {
 		var parsed = ko.utils.parseJson(jsonString);
 		arguments[0] = parsed;
-		return ko.mapping.fromJS.apply(this, arguments);
+		return exports.fromJS.apply(this, arguments);
 	};
 
-	ko.mapping.updateFromJS = function (viewModel) {
+	exports.updateFromJS = function (viewModel) {
 		throw new Error("ko.mapping.updateFromJS, use ko.mapping.fromJS instead. Please note that the order of parameters is different!");
 	};
 
-	ko.mapping.updateFromJSON = function (viewModel) {
+	exports.updateFromJSON = function (viewModel) {
 		throw new Error("ko.mapping.updateFromJSON, use ko.mapping.fromJSON instead. Please note that the order of parameters is different!");
 	};
 
-	ko.mapping.toJS = function (rootObject, options) {
-		if (!defaultOptions) ko.mapping.resetDefaultOptions();
+	exports.toJS = function (rootObject, options) {
+		if (!defaultOptions) exports.resetDefaultOptions();
 
 		if (arguments.length == 0) throw new Error("When calling ko.mapping.toJS, pass the object you want to convert.");
 		if (!(defaultOptions.ignore instanceof Array)) throw new Error("ko.mapping.defaultOptions().ignore should be an array.");
@@ -139,17 +131,17 @@ ko.exportProperty = function (owner, publicName, object) {
 		options = fillOptions(options, rootObject[mappingProperty]);
 
 		// We just unwrap everything at every level in the object graph
-		return ko.mapping.visitModel(rootObject, function (x) {
+		return exports.visitModel(rootObject, function (x) {
 			return ko.utils.unwrapObservable(x)
 		}, options);
 	};
 
-	ko.mapping.toJSON = function (rootObject, options) {
-		var plainJavaScriptObject = ko.mapping.toJS(rootObject, options);
+	exports.toJSON = function (rootObject, options) {
+		var plainJavaScriptObject = exports.toJS(rootObject, options);
 		return ko.utils.stringifyJson(plainJavaScriptObject);
 	};
 
-	ko.mapping.defaultOptions = function () {
+	exports.defaultOptions = function () {
 		if (arguments.length > 0) {
 			defaultOptions = arguments[0];
 		} else {
@@ -157,7 +149,7 @@ ko.exportProperty = function (owner, publicName, object) {
 		}
 	};
 
-	ko.mapping.resetDefaultOptions = function () {
+	exports.resetDefaultOptions = function () {
 		defaultOptions = {
 			include: _defaultOptions.include.slice(0),
 			ignore: _defaultOptions.ignore.slice(0),
@@ -165,7 +157,7 @@ ko.exportProperty = function (owner, publicName, object) {
 		};
 	};
 
-	ko.mapping.getType = function(x) {
+	exports.getType = function(x) {
 		if ((x) && (typeof (x) === "object") && (x.constructor == (new Date).constructor)) return "date";
 		return typeof x;
 	}
@@ -195,11 +187,11 @@ ko.exportProperty = function (owner, publicName, object) {
 
 	function mergeArrays(a, b) {
 		if (!(a instanceof Array)) {
-			if (ko.mapping.getType(a) === "undefined") a = [];
+			if (exports.getType(a) === "undefined") a = [];
 			else a = [a];
 		}
 		if (!(b instanceof Array)) {
-			if (ko.mapping.getType(b) === "undefined") b = [];
+			if (exports.getType(b) === "undefined") b = [];
 			else b = [b];
 		}
 		return a.concat(b);
@@ -264,7 +256,7 @@ ko.exportProperty = function (owner, publicName, object) {
 		parentPropertyName = parentPropertyName || "";
 
 		// If this object was already mapped previously, take the options from there and merge them with our existing ones.
-		if (ko.mapping.isMapped(mappedRootObject)) {
+		if (exports.isMapped(mappedRootObject)) {
 			var previousMapping = ko.utils.unwrapObservable(mappedRootObject)[mappingProperty];
 			options = merge(previousMapping, options);
 		}
@@ -315,7 +307,7 @@ ko.exportProperty = function (owner, publicName, object) {
 		if (!isArray) {
 			// For atomic types, do a direct update on the observable
 			if (!canHaveProperties(rootObject)) {
-				switch (ko.mapping.getType(rootObject)) {
+				switch (exports.getType(rootObject)) {
 				case "function":
 					if (hasUpdateCallback()) {
 						if (ko.isWriteableObservable(rootObject)) {
@@ -542,7 +534,7 @@ ko.exportProperty = function (owner, publicName, object) {
 	function mapKey(item, callback) {
 		var mappedItem;
 		if (callback) mappedItem = callback(item);
-		if (ko.mapping.getType(mappedItem) === "undefined") mappedItem = item;
+		if (exports.getType(mappedItem) === "undefined") mappedItem = item;
 
 		return ko.utils.unwrapObservable(mappedItem);
 	}
@@ -579,7 +571,7 @@ ko.exportProperty = function (owner, publicName, object) {
 	};
 
 	function canHaveProperties(object) {
-		var type = ko.mapping.getType(object);
+		var type = exports.getType(object);
 		return (type === "object") && (object !== null) && (type !== "undefined");
 	}
 
@@ -600,7 +592,7 @@ ko.exportProperty = function (owner, publicName, object) {
 		return propertyName;
 	}
 
-	ko.mapping.visitModel = function (rootObject, callback, options) {
+	exports.visitModel = function (rootObject, callback, options) {
 		options = options || {};
 		options.visitedObjects = options.visitedObjects || new objectLookup();
 
@@ -622,21 +614,15 @@ ko.exportProperty = function (owner, publicName, object) {
 
 		var parentName = options.parentName;
 		visitPropertiesOrArrayEntries(unwrappedRootObject, function (indexer) {
-			var currentOptions = options;
-			var mappingObject = unwrappedRootObject[mappingProperty];
-			if (mappingObject) {
-				currentOptions = fillOptions(mappingObject,options);
-			}
-			
-			if (currentOptions.ignore && ko.utils.arrayIndexOf(currentOptions.ignore, indexer) != -1) return;
+			if (options.ignore && ko.utils.arrayIndexOf(options.ignore, indexer) != -1) return;
 
 			var propertyValue = unwrappedRootObject[indexer];
 			options.parentName = getPropertyName(parentName, unwrappedRootObject, indexer);
 
 			// If we don't want to explicitly copy the unmapped property...
-			if (ko.utils.arrayIndexOf(currentOptions.copy, indexer) === -1) {
+			if (ko.utils.arrayIndexOf(options.copy, indexer) === -1) {
 				// ...find out if it's a property we want to explicitly include
-				if (ko.utils.arrayIndexOf(currentOptions.include, indexer) === -1) {
+				if (ko.utils.arrayIndexOf(options.include, indexer) === -1) {
 					// The mapped properties object contains all the properties that were part of the original object.
 					// If a property does not exist, and it is not because it is part of an array (e.g. "myProp[3]"), then it should not be unmapped.
 					if (unwrappedRootObject[mappingProperty] && unwrappedRootObject[mappingProperty].mappedProperties && !unwrappedRootObject[mappingProperty].mappedProperties[indexer] && !(unwrappedRootObject instanceof Array)) {
@@ -646,11 +632,11 @@ ko.exportProperty = function (owner, publicName, object) {
 			}
 
 			var outputProperty;
-			switch (ko.mapping.getType(ko.utils.unwrapObservable(propertyValue))) {
+			switch (exports.getType(ko.utils.unwrapObservable(propertyValue))) {
 			case "object":
 			case "undefined":
 				var previouslyMappedValue = options.visitedObjects.get(propertyValue);
-				mappedRootObject[indexer] = (ko.mapping.getType(previouslyMappedValue) !== "undefined") ? previouslyMappedValue : ko.mapping.visitModel(propertyValue, callback, options);
+				mappedRootObject[indexer] = (exports.getType(previouslyMappedValue) !== "undefined") ? previouslyMappedValue : exports.visitModel(propertyValue, callback, options);
 				break;
 			default:
 				mappedRootObject[indexer] = callback(propertyValue, options.parentName);
@@ -676,20 +662,4 @@ ko.exportProperty = function (owner, publicName, object) {
 			return (existingIndex >= 0) ? values[existingIndex] : undefined;
 		};
 	};
-
-	ko.exportSymbol('ko.mapping', ko.mapping);
-	ko.exportSymbol('ko.mapping.fromJS', ko.mapping.fromJS);
-	ko.exportSymbol('ko.mapping.fromJSON', ko.mapping.fromJSON);
-	ko.exportSymbol('ko.mapping.isMapped', ko.mapping.isMapped);
-	ko.exportSymbol('ko.mapping.defaultOptions', ko.mapping.defaultOptions);
-	ko.exportSymbol('ko.mapping.toJS', ko.mapping.toJS);
-	ko.exportSymbol('ko.mapping.toJSON', ko.mapping.toJSON);
-	ko.exportSymbol('ko.mapping.updateFromJS', ko.mapping.updateFromJS);
-	ko.exportSymbol('ko.mapping.updateFromJSON', ko.mapping.updateFromJSON);
-	ko.exportSymbol('ko.mapping.visitModel', ko.mapping.visitModel);
-})();
-
-}.call(root));
-
-
-}); }(this));
+}));

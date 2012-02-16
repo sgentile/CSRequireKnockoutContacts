@@ -1,6 +1,6 @@
 define [
   'jquery', 
-  'ko',
+  'knockout',
   'cs!models/contact',
   'cs!collections/contacts',
   'bootstrap',
